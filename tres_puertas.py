@@ -1,29 +1,21 @@
 import random
 
-def mostrar_resultado(bueno, puerta_abierta, puerta_cambiar, eleccion):
+def mostrar_resultado(bueno, abrir_puerta, cambiar_a_puerta, eleccion):
     global respuesta 
-    respuesta = input(f'          Abri puerta {puerta_abierta} y no estaba el premio, quieres cambiar a puerta {puerta_cambiar} ? S/N : ')
+    respuesta = input(f'          Abri puerta {abrir_puerta} y no estaba el premio, quieres cambiar a puerta {cambiar_a_puerta} ? S/N : ')
     if bueno:
         if respuesta == 's':
-            print(' ')
             print('                           *****  G A N A S T E  *****') 
-            print(' ')  
-            return puerta_cambiar
+            return cambiar_a_puerta
         else:
-            print(' ')
             print('                           ***  Lo siento perdiste  ***')
-            print(' ')
             return eleccion
     else:
         if respuesta == 's':
-            print(' ')
             print('                           ***  Lo siento perdiste  ***')
-            print(' ')
-            return puerta_cambiar
+            return cambiar_a_puerta
         else:
-            print(' ')
             print('                           *****  G A N A S T E  *****')
-            print(' ')
             return eleccion
     
 
@@ -36,52 +28,39 @@ def main():
     jugadas = 0
     ganados = 0
     cambio = 0
-    print('          ***  BIENVENIDO A TRES PUERTAS ***')
+    print('          ***  BIENVENIDO AL JUEGO TRES PUERTAS ***')
     while seguir == 's':
-        puerta_premio = random.randint(1,3)
+        abrir_puerta = 0
+        puertas = ['vacio','vacio','vacio']
+        puertas_vacias = []
+        puertas[random.randint(0,2)] = 'premio'  # se genera el indice/numero de puerta y se asigna en ese indice la palabra premnio
+        print(f'puertas:  {puertas}')
         print('*******************  JUEGO N° ' + str(jugadas + 1) + '  **********************')
         eleccion = int(input("""          Elija una puerta 
                 1
                 2
                 3
           Puerta: """))
-        #print('Puerta premio: ' + str(puerta_premio))
-        if eleccion == puerta_premio:
-            if eleccion == 1:
-                puerta_abrir = random.randint(1,2) # 1 = 2 y 2 = 3
-                if puerta_abrir == 1:
-                    nueva_eleccion = mostrar_resultado(False, puerta_abrir + 1, puerta_abrir + 2, eleccion)
-                else:
-                    nueva_eleccion = mostrar_resultado(False, puerta_abrir + 1, puerta_abrir, eleccion) 
-            elif eleccion == 2:
-                puerta_abrir = random.randint(1,2) # 1 = 1 y 2 = 3
-                if puerta_abrir == 1:
-                    nueva_eleccion = mostrar_resultado(False, puerta_abrir, puerta_abrir + 2, eleccion)
-                else:
-                    nueva_eleccion = mostrar_resultado(False, puerta_abrir + 1, puerta_abrir - 1, eleccion)
-            elif eleccion == 3:
-                puerta_abrir = random.randint(1,2) # 1 = 1 y 2 = 2
-                if puerta_abrir == 1:
-                    nueva_eleccion = mostrar_resultado(False, puerta_abrir, puerta_abrir + 1, eleccion)
-                else:
-                    nueva_eleccion = mostrar_resultado(False, puerta_abrir, puerta_abrir - 1, eleccion)
-        else:
-            if puerta_premio == 1:
-                if eleccion == 2:
-                    nueva_eleccion = mostrar_resultado(True, 3, 1, eleccion)
-                elif eleccion == 3:
-                    nueva_eleccion = mostrar_resultado(True, 2, 1, eleccion)
-            elif puerta_premio == 2:
-                if eleccion == 1:
-                    nueva_eleccion = mostrar_resultado(True, 3, 2, eleccion)
-                elif eleccion == 3:
-                    nueva_eleccion = mostrar_resultado(True, 1, 2, eleccion)
-            elif puerta_premio == 3:
-                if eleccion == 1:
-                    nueva_eleccion = mostrar_resultado(True, 2, 3, eleccion)
-                elif eleccion == 2:
-                    nueva_eleccion = mostrar_resultado(True, 1, 3, eleccion)
+        for i, v in enumerate(puertas): # accede al indice y al valor de la lista con la funcion enumerate()
+            if v == 'premio':
+                puerta_premio = i + 1
+            else:
+                puertas_vacias.append(i+1)
 
+        print(f'                                   puerta premio: {puerta_premio}      puertas vacias: {puertas_vacias}     eleccion: {eleccion}')
+        if eleccion == puerta_premio:
+            abrir_puerta = random.choice(puertas_vacias)
+            print(f'abrir puerta: {abrir_puerta}')
+            if abrir_puerta == puertas_vacias[0]:
+                nueva_eleccion = mostrar_resultado(False, abrir_puerta, puertas_vacias[1], eleccion)
+            else: 
+                nueva_eleccion = mostrar_resultado(False, abrir_puerta, puertas_vacias[0], eleccion)
+        else:
+            if eleccion == puertas_vacias[0]:
+                nueva_eleccion = mostrar_resultado(True, puertas_vacias[1], puerta_premio, eleccion)
+            else:
+                nueva_eleccion = mostrar_resultado(True, puertas_vacias[0], puerta_premio, eleccion)
+        
         jugadas += 1
         premios.append(puerta_premio)
         elecciones.append(eleccion)
