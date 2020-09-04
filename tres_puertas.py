@@ -36,6 +36,7 @@ def main():
     jugadas = 0
     ganados = 0
     cambio = 0
+    print('          ***  BIENVENIDO A TRES PUERTAS ***')
     while seguir == 's':
         puerta_premio = random.randint(1,3)
         print('*******************  JUEGO N° ' + str(jugadas + 1) + '  **********************')
