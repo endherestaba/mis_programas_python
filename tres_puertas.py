@@ -37,14 +37,16 @@ def main():
     print('         ( Una de las 3 puertas contiene un premio, elige bien! )')
     while seguir.lower() != 'n':
         abrir_puerta = 0
+        eleccion = 0
         puertas = ['vacio','vacio','vacio']
         puertas_vacias = []
         puertas[random.randint(0,2)] = 'premio'  # se genera el indice/numero de puerta y se asigna en ese indice la palabra premnio
         print('')
         print('*******************  ROUND ' + str(jugadas + 1) + '  **********************')
-        eleccion = int(input("""          Elije una puerta 
+        while eleccion != 1 and eleccion != 2 and eleccion != 3:
+            eleccion = int(input("""          Elije una puerta 
                 1                2                3
-          Puerta: """))
+             Puerta: """))
         for i, v in enumerate(puertas): # accede al indice y al valor de la lista con la funcion enumerate()
             if v == 'premio':
                 puerta_premio = i + 1
