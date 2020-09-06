@@ -4,21 +4,45 @@ def mostrar_resultado(cambio_positivo, abrir_puerta, cambiar_a_puerta, eleccion,
     global respuesta
     respuesta = ''
     while respuesta.lower() != 's' and respuesta.lower() != 'n':
-        respuesta = input(f'          Abri la puerta {abrir_puerta} y no estaba el premio, quieres cambiar a la puerta {cambiar_a_puerta} ? S/N : ')
+        print('')
+        if abrir_puerta == 1:
+            print("""           _              _              _
+          [ ]            [2]            [3]          
+           ¯              ¯              ¯ """)
+            respuesta = input(f' LA PUERTA 1 ESTA VACIA                           Quieres cambiar a la puerta {cambiar_a_puerta}? (S/N): ')
+       
+
+        elif abrir_puerta == 2:
+            print("""           _              _              _
+          [1]            [ ]            [3]             
+           ¯              ¯              ¯ """)
+            respuesta = input(f'                LA PUERTA 2 ESTA VACIA            Quieres cambiar a la puerta {cambiar_a_puerta}? (S/N): ')
+                
+        else:
+            print("""           _              _              _
+          [1]            [2]            [ ]             
+           ¯              ¯              ¯ """)
+            respuesta = input(f'                               LA PUERTA 3 ESTA VACIA Quieres cambiar a la puerta {cambiar_a_puerta}? (S/N): ')
+                                  
+        #respuesta = input(f'                                                 Quieres cambiar a la puerta {cambiar_a_puerta}? (S/N): ')
     
         if respuesta.lower() == 's':
             if cambio_positivo:
-                print('                                                   *  ! F E L I C I D A D E S !    G A N A S T E  *') 
+                print('')
+                print('           *  ! F E L I C I D A D E S !    G A N A S T E  *') 
             else:
-                print(f'                                                   * UFF!!! PERDISTE, el premio estaba en la puerta {puerta_premio} *')
+                print('')
+                print(f'          * UFF!!! PERDISTE, el premio estaba en la puerta {puerta_premio} *')
 
             return cambiar_a_puerta
         
         elif respuesta.lower() == 'n':
             if cambio_positivo:
-                print(f'                                                   * UFF!!! PERDISTE, el premio estaba en la puerta {puerta_premio} *')
+                print('')
+                print(f'          * UFF!!! PERDISTE, el premio estaba en la puerta {puerta_premio} *')
             else:
-                print('                                                   *  ! F E L I C I D A D E S !    G A N A S T E  *')
+                print('')
+                print('           *  ! F E L I C I D A D E S !    G A N A S T E  *')
 
             return eleccion
     
@@ -33,8 +57,8 @@ def main():
     ganados = 0
     cambio = 0
     print('')
-    print('            * BIENVENIDO AL JUEGO DE LAS TRES PUERTAS *')
-    print('         ( Una de las 3 puertas contiene un premio, elige bien! )')
+    print('                      * BIENVENIDO AL JUEGO DE LAS TRES PUERTAS *')
+    print('              ( Una de las 3 puertas contiene un premio, elige bien! )')
     while seguir.lower() != 'n':
         abrir_puerta = 0
         eleccion = 0
@@ -42,11 +66,13 @@ def main():
         puertas_vacias = []
         puertas[random.randint(0,2)] = 'premio'  # se genera el indice/numero de puerta y se asigna en ese indice la palabra premnio
         print('')
-        print('*******************  ROUND ' + str(jugadas + 1) + '  **********************')
-        while eleccion != 1 and eleccion != 2 and eleccion != 3:
-            eleccion = int(input("""          Elije una puerta 
-                1                2                3
-             Puerta: """))
+        print('*************************************  ROUND ' + str(jugadas + 1) + '  **************************************')
+        while eleccion != '1' and eleccion != '2' and eleccion != '3':
+            print("""           _              _              _
+          [1]            [2]            [3]           
+           ¯              ¯              ¯""")
+            eleccion = input('                                                                              Eleccion:' )                                                                                              
+        eleccion = int(eleccion)
         for i, v in enumerate(puertas): # accede al indice y al valor de la lista con la funcion enumerate()
             if v == 'premio':
                 puerta_premio = i + 1
@@ -72,7 +98,8 @@ def main():
         elecciones.append(eleccion)
         nuevas_elecciones.append(nueva_eleccion)
         cambios.append(respuesta)
-        seguir = input(f'                 Seguir jugando? S/N: ')
+        print('')
+        seguir = input(f'                                                                  Seguir jugando? S/N: ')
     print(' ')
     print('RESULTADOS:')
     for i in range(jugadas):
